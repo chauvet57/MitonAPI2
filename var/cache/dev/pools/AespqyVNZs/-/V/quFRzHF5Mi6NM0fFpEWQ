@@ -1,0 +1,3 @@
+<?php //route_name_7cc9d8ea87b8418103678487ab1f1a1e
+
+return [PHP_INT_MAX, 'api_aliments_get_collection'];

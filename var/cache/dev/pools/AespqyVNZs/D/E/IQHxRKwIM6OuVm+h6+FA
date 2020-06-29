@@ -1,0 +1,3 @@
+<?php //route_name_17d45f2774b41ae465223bf3ac0d62cf
+
+return [PHP_INT_MAX, 'api_difficultes_get_item'];

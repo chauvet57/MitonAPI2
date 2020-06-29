@@ -1,0 +1,3 @@
+<?php //route_name_d8623de285e7322dd00e856cd07e9365
+
+return [PHP_INT_MAX, 'api_recettes_get_item'];

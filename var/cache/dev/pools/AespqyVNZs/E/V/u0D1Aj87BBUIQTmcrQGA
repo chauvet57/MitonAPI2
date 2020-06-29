@@ -1,0 +1,3 @@
+<?php //route_name_42ad9da0349c976018dd70c6fe9c16f2
+
+return [PHP_INT_MAX, 'api_prices_get_collection'];
