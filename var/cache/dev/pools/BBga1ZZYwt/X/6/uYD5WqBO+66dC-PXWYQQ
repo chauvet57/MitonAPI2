@@ -21,8 +21,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -32,8 +48,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -46,8 +78,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -57,8 +105,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -71,8 +135,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -82,8 +162,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -93,16 +189,32 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'patch' => [
                         'method' => 'PATCH',
                         'input_formats' => [
-                            'json' => [
-                                'application/merge-patch+json',
+                            'jsonapi' => [
+                                'application/vnd.api+json',
                             ],
                         ],
                         'output_formats' => [
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -119,8 +231,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -130,8 +258,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -144,8 +288,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',
@@ -155,8 +315,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             'jsonld' => [
                                 'application/ld+json',
                             ],
+                            'jsonhal' => [
+                                'application/hal+json',
+                            ],
+                            'jsonapi' => [
+                                'application/vnd.api+json',
+                            ],
                             'json' => [
-                                'application/json',
+                                'application/merge-patch+json',
+                            ],
+                            'xml' => [
+                                'application/xml',
+                                'text/xml',
+                            ],
+                            'yaml' => [
+                                'application/x-yaml',
+                            ],
+                            'csv' => [
+                                'text/csv',
                             ],
                             'html' => [
                                 'text/html',

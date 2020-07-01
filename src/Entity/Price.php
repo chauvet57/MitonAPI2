@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\PriceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 /**
- * @ApiResource()
+ * @ApiResource
  * @ORM\Entity(repositoryClass=PriceRepository::class)
  */
 class Price
@@ -18,11 +22,14 @@ class Price
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("recette")
      */
     private $id;
 
     /**
+     * 
      * @ORM\Column(type="string", length=255)
+     * @Groups("recette")
      */
     private $nom_prix;
 

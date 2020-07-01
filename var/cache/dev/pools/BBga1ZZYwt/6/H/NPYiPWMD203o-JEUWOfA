@@ -18,94 +18,52 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'get' => [
                         'method' => 'GET',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
                     'delete' => [
                         'method' => 'DELETE',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
                     'put' => [
                         'method' => 'PUT',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
                     'patch' => [
                         'method' => 'PATCH',
                         'input_formats' => [
-                            'json' => [
-                                'application/merge-patch+json',
+                            'jsonapi' => [
+                                'application/vnd.api+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
@@ -116,50 +74,26 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'get' => [
                         'method' => 'GET',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
                     'post' => [
                         'method' => 'POST',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
-                                'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
+                                'application/merge-patch+json',
                             ],
                         ],
                     ],
@@ -176,6 +110,19 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'attributes' => [
                 [
+                    'formats' => [
+                        'json',
+                    ],
+                    'normalization_context' => [
+                        'groups' => [
+                            'recette',
+                        ],
+                    ],
+                    'denormalization_context' => [
+                        'groups' => [
+                            'recette',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],

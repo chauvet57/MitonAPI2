@@ -8,8 +8,25 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
     null,
     [
         'stdClass' => [
+            'attributes' => [
+                [
+                    'formats' => [
+                        'json',
+                    ],
+                    'normalization_context' => [
+                        'groups' => [
+                            'recette',
+                        ],
+                    ],
+                    'denormalization_context' => [
+                        'groups' => [
+                            'recette',
+                        ],
+                    ],
+                ],
+            ],
             'repositoryClass' => [
-                1 => 'RecetteRepository',
+                1 => 'App\\Repository\\RecetteRepository',
             ],
         ],
     ],

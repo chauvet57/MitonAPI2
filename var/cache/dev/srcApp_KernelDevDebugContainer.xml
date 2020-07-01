@@ -246,16 +246,32 @@
       <parameter key="jsonld" type="collection">
         <parameter>application/ld+json</parameter>
       </parameter>
+      <parameter key="jsonhal" type="collection">
+        <parameter>application/hal+json</parameter>
+      </parameter>
+      <parameter key="jsonapi" type="collection">
+        <parameter>application/vnd.api+json</parameter>
+      </parameter>
       <parameter key="json" type="collection">
-        <parameter>application/json</parameter>
+        <parameter>application/merge-patch+json</parameter>
+      </parameter>
+      <parameter key="xml" type="collection">
+        <parameter>application/xml</parameter>
+        <parameter>text/xml</parameter>
+      </parameter>
+      <parameter key="yaml" type="collection">
+        <parameter>application/x-yaml</parameter>
+      </parameter>
+      <parameter key="csv" type="collection">
+        <parameter>text/csv</parameter>
       </parameter>
       <parameter key="html" type="collection">
         <parameter>text/html</parameter>
       </parameter>
     </parameter>
     <parameter key="api_platform.patch_formats" type="collection">
-      <parameter key="json" type="collection">
-        <parameter>application/merge-patch+json</parameter>
+      <parameter key="jsonapi" type="collection">
+        <parameter>application/vnd.api+json</parameter>
       </parameter>
     </parameter>
     <parameter key="api_platform.error_formats" type="collection">
@@ -1292,6 +1308,38 @@
         <argument>0</argument>
       </call>
       <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="api_platform.jsonapi.listener.request.transform_pagination_parameters"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>5</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="api_platform.jsonapi.listener.request.transform_sorting_parameters"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>5</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="api_platform.jsonapi.listener.request.transform_fieldsets_parameters"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>5</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="api_platform.jsonapi.listener.request.transform_filtering_parameters"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>5</argument>
+      </call>
+      <call method="addListener">
         <argument>kernel.response</argument>
         <argument type="collection">
           <argument type="service" id="api_platform.hydra.listener.response.add_link_header"/>
@@ -1794,15 +1842,21 @@
     <service id="serializer" class="Symfony\Component\Serializer\Serializer" public="true">
       <argument type="collection">
         <argument type="service" id="api_platform.swagger.normalizer.api_gateway"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.hydra.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.problem.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.swagger.normalizer.api_gateway"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.error"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.entrypoint"/>
         <argument type="service" id="api_platform.hydra.normalizer.documentation"/>
         <argument type="service" id="api_platform.hydra.normalizer.entrypoint"/>
         <argument type="service" id="api_platform.hydra.normalizer.error"/>
+        <argument type="service" id="api_platform.hal.normalizer.entrypoint"/>
         <argument type="service" id="api_platform.problem.normalizer.error"/>
         <argument type="service" id="serializer.normalizer.problem"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.item"/>
         <argument type="service" id="api_platform.jsonld.normalizer.item"/>
+        <argument type="service" id="api_platform.hal.normalizer.item"/>
         <argument type="service" id="api_platform.serializer.normalizer.item"/>
         <argument type="service" id="serializer.normalizer.json_serializable"/>
         <argument type="service" id="serializer.normalizer.datetime"/>
@@ -1810,9 +1864,13 @@
         <argument type="service" id="serializer.normalizer.datetimezone"/>
         <argument type="service" id="serializer.normalizer.dateinterval"/>
         <argument type="service" id="serializer.normalizer.data_uri"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.collection"/>
         <argument type="service" id="api_platform.hydra.normalizer.collection_filters"/>
+        <argument type="service" id="api_platform.hal.normalizer.collection"/>
         <argument type="service" id="serializer.denormalizer.array"/>
+        <argument type="service" id="api_platform.jsonapi.normalizer.object"/>
         <argument type="service" id="api_platform.jsonld.normalizer.object"/>
+        <argument type="service" id="api_platform.hal.normalizer.object"/>
         <argument type="service" id="serializer.normalizer.object"/>
       </argument>
       <argument type="collection">
@@ -1820,7 +1878,9 @@
         <argument type="service" id="serializer.encoder.json"/>
         <argument type="service" id="serializer.encoder.yaml"/>
         <argument type="service" id="serializer.encoder.csv"/>
+        <argument type="service" id="api_platform.jsonapi.encoder"/>
         <argument type="service" id="api_platform.jsonld.encoder"/>
+        <argument type="service" id="api_platform.hal.encoder"/>
         <argument type="service" id="api_platform.problem.encoder"/>
       </argument>
     </service>
@@ -3754,6 +3814,71 @@
       <argument>false</argument>
       <argument>%api_platform.swagger.versions%</argument>
     </service>
+    <service id="api_platform.jsonapi.encoder" class="ApiPlatform\Core\Serializer\JsonEncoder" public="false">
+      <tag name="serializer.encoder"/>
+      <argument>jsonapi</argument>
+    </service>
+    <service id="api_platform.jsonapi.name_converter.reserved_attribute_name" class="ApiPlatform\Core\JsonApi\Serializer\ReservedAttributeNameConverter" public="false">
+      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.entrypoint" class="ApiPlatform\Core\JsonApi\Serializer\EntrypointNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-800"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.iri_converter"/>
+      <argument type="service" id="api_platform.router"/>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.collection" class="ApiPlatform\Core\JsonApi\Serializer\CollectionNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-985"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
+      <argument>page</argument>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.item" class="ApiPlatform\Core\JsonApi\Serializer\ItemNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-890"/>
+      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
+      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.iri_converter"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="api_platform.jsonapi.name_converter.reserved_attribute_name"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+      <argument type="collection"/>
+      <argument type="tagged_iterator" tag="api_platform.data_transformer"/>
+      <argument>false</argument>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.object" class="ApiPlatform\Core\JsonApi\Serializer\ObjectNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-995"/>
+      <argument type="service" id="serializer.normalizer.object"/>
+      <argument type="service" id="api_platform.iri_converter"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.constraint_violation_list" class="ApiPlatform\Core\JsonApi\Serializer\ConstraintViolationListNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-780"/>
+      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.jsonapi.name_converter.reserved_attribute_name"/>
+    </service>
+    <service id="api_platform.jsonapi.normalizer.error" class="ApiPlatform\Core\JsonApi\Serializer\ErrorNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-790"/>
+      <argument>true</argument>
+    </service>
+    <service id="api_platform.jsonapi.listener.request.transform_pagination_parameters" class="ApiPlatform\Core\JsonApi\EventListener\TransformPaginationParametersListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="5"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="api_platform.jsonapi.listener.request.transform_sorting_parameters" class="ApiPlatform\Core\JsonApi\EventListener\TransformSortingParametersListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="5"/>
+      <tag name="container.hot_path"/>
+      <argument>order</argument>
+    </service>
+    <service id="api_platform.jsonapi.listener.request.transform_fieldsets_parameters" class="ApiPlatform\Core\JsonApi\EventListener\TransformFieldsetsParametersListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="5"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+    </service>
+    <service id="api_platform.jsonapi.listener.request.transform_filtering_parameters" class="ApiPlatform\Core\JsonApi\EventListener\TransformFilteringParametersListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="5"/>
+      <tag name="container.hot_path"/>
+    </service>
     <service id="api_platform.jsonld.context_builder" class="ApiPlatform\Core\JsonLd\ContextBuilder" public="false">
       <argument type="service" id="api_platform.metadata.resource.name_collection_factory.cached"/>
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -3840,6 +3965,42 @@
     </service>
     <service id="api_platform.hydra.json_schema.schema_factory" class="ApiPlatform\Core\Hydra\JsonSchema\SchemaFactory">
       <argument type="service" id="api_platform.hydra.json_schema.schema_factory.inner"/>
+    </service>
+    <service id="api_platform.hal.encoder" class="ApiPlatform\Core\Serializer\JsonEncoder" public="false">
+      <tag name="serializer.encoder"/>
+      <argument>jsonhal</argument>
+    </service>
+    <service id="api_platform.hal.normalizer.entrypoint" class="ApiPlatform\Core\Hal\Serializer\EntrypointNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-800"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.iri_converter"/>
+      <argument type="service" id="api_platform.router"/>
+    </service>
+    <service id="api_platform.hal.normalizer.collection" class="ApiPlatform\Core\Hal\Serializer\CollectionNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-985"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
+      <argument>page</argument>
+    </service>
+    <service id="api_platform.hal.normalizer.item" class="ApiPlatform\Core\Hal\Serializer\ItemNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-890"/>
+      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
+      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.iri_converter"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
+      <argument type="service" id="serializer.mapping.class_metadata_factory" on-invalid="ignore"/>
+      <argument>null</argument>
+      <argument>false</argument>
+      <argument type="collection"/>
+      <argument type="tagged_iterator" tag="api_platform.data_transformer"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached" on-invalid="ignore"/>
+      <argument>false</argument>
+    </service>
+    <service id="api_platform.hal.normalizer.object" class="ApiPlatform\Core\Hal\Serializer\ObjectNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-995"/>
+      <argument type="service" id="serializer.normalizer.object"/>
+      <argument type="service" id="api_platform.iri_converter"/>
     </service>
     <service id="api_platform.problem.encoder" class="ApiPlatform\Core\Serializer\JsonEncoder" public="false">
       <tag name="serializer.encoder"/>

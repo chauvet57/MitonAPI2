@@ -1,19 +1,30 @@
 <?php
 
 namespace App\Entity;
+use App\Entity\Price;
 
+use App\Repository\RecetteRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 /**
- * @ApiResource()
+ * @ApiResource(formats={"json"},
+ *     normalizationContext={"groups"={"recette"}},
+ *     denormalizationContext={"groups"={"recette"}},
+ * )
  * @ORM\Entity(repositoryClass=RecetteRepository::class)
  */
 class Recette
 {
     /**
+     * @Groups({"recette"})
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -21,56 +32,68 @@ class Recette
     private $id;
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="string", length=255)
      */
     private $nom_recette;
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="integer")
      */
     private $nombre_personne;
 
     /**
+     * 
      * @ORM\Column(type="boolean")
      */
     private $is_valide;
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="time")
      */
     private $temps;
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="string", length=255)
      */
     private $image;
 
     /**
+     * @Groups({"recette"})
      * @ORM\ManyToMany(targetEntity=Categorie::class, mappedBy="recette")
      */
     private $categories;
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="array")
      */
     private $etapes = [];
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $images = [];
 
     /**
+     * @Groups({"recette"})
      * @ORM\Column(type="array")
      */
     private $ingredients = [];
 
     /**
+     * @ORM\JoinTable(name="price") 
+     * @Groups({"recette"})
      * @ORM\ManyToOne(targetEntity=Price::class, inversedBy="recette")
      */
     private $price;
 
     /**
+     * @Groups({"recette"})
      * @ORM\ManyToOne(targetEntity=Difficulte::class, inversedBy="recette")
      */
     private $difficulte;
